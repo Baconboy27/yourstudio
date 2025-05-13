@@ -1,1 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YourStudio | YourNoteTaking</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --background: #0a0a0a;
+      --card-bg: #111111;
+      --card-hover: #1a1a1a;
+      --text: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--background);
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 1.5rem;
+    }
+    
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 1.5rem;
+    }
+    
+    h3 {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+    }
+    
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      outline: none;
+      text-decoration: none;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background-color: var(--accent);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    /* Header styles */
+    header {
+      padding: 1.5rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(10, 10, 10, 0.8);
+    }
+    
+    header.scrolled {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+    
+    .nav-links a:hover {
+      color: var(--text);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, rgba(10, 10, 10, 1) 0%, rgba(30, 30, 30, 1) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, rgba(10, 10, 10, 0) 50%);
+      z-index: 0;
+    }
+    
+    .hero-content {
+      max-width: 600px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .hero-image {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 45%;
+      max-width: 600px;
+      opacity: 0;
+    }
+    
+    .browser-mockup {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .browser-header {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+    }
+    
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .dot-red {
+      background-color: #ff5f57;
+    }
+    
+    .dot-yellow {
+      background-color: #ffbd2e;
+    }
+    
+    .dot-green {
+      background-color: #28c940;
+    }
+    
+    .browser-address {
+      margin-left: 1rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      flex-grow: 1;
+    }
+    
+    .browser-content {
+      padding: 1.5rem;
+      min-height: 300px;
+      position: relative;
+    }
+    
+    .note-card {
+      background-color: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .note-title {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+    
+    .note-content {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    /* Features section */
+    .features {
+      padding: 100px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .feature-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      transition: var(--transition);
+      height: 100%;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      background-color: var(--card-hover);
+    }
+    
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--border-radius-sm);
+      background-color: rgba(99, 102, 241, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    
+    /* How it works section */
+    .how-it-works {
+      padding: 100px 0;
+      background-color: rgba(255, 255, 255, 0.02);
+      border-radius: var(--border-radius);
+    }
+    
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    
+    .step {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 auto 1.5rem;
+    }
+    
+    /* Demo section */
+    .demo {
+      padding: 100px 0;
+      
+    }
+    
 
+    .extension-preview {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+    .demo-container {
+      max-width: 800px;
+      margin: 4rem auto 0;
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      position: center;
+    }
+    
+    .demo-screen {
+      position: center;
+      height: 400px;
+      overflow: hidden;
+    }
+    
+    .cursor {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M10,0 L20,10 L12,11 L11,19 L0,0 Z' fill='%23ffffff'/%3E%3C/svg%3E");
+      background-size: contain;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+    }
+    
+    /* Download section */
+    .download {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .download::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.2) 0%, rgba(10, 10, 10, 0) 60%);
+      z-index: 0;
+    }
+    
+    .download-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 80px 0 40px;
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      margin-top: 100px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+    }
+    
+    .footer-column h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .footer-column ul {
+      list-style: none;
+    }
+    
+    .footer-column ul li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .footer-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .footer-column a:hover {
+      color: var(--text);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    
+    .social-icon:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    
+    .social-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 1024px) {
+      .hero-image {
+        width: 40%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero {
+        padding: 150px 0 80px;
+      }
+      
+      .hero-content {
+        max-width: 100%;
+        text-align: center;
+      }
+      
+      .hero-buttons {
+        justify-content: center;
+      }
+      
+      .hero-image {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin: 3rem auto 0;
+        right: auto;
+        top: auto;
+        transform: none;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
+        background-color: var(--card-bg);
+        padding: 2rem;
+        z-index: 1000;
+        transition: var(--transition);
+      }
+      
+      .mobile-menu.active {
+        right: 0;
+      }
+      
+      .mobile-menu-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      
+      .mobile-nav-links {
+        list-style: none;
+        margin-top: 3rem;
+      }
+      
+      .mobile-nav-links li {
+        margin-bottom: 1.5rem;
+      }
+      
+      .mobile-nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: block;
+        padding: 0.5rem 0;
+      }
+    }
+    
+    /* Animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .glow {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    }
+    
+    /* Scroll animations */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+    
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Parallax container */
+    .parallax-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    /* Floating elements */
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+    
+    /* Gradient background for hero */
+    
+    
+    /* Gradient background for download section */
+    
+    
+    /* Horizontal scroll container for steps on mobile */
+    @media (max-width: 768px) {
+      .steps {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 20px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      .steps::-webkit-scrollbar {
+        display: none;
+      }
+      
+      .step {
+        flex: 0 0 80%;
+        scroll-snap-align: center;
+        margin-right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header id="header">
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          </svg>
+          YourNoteTaking
+        </div>
+        <ul class="nav-links">
+          <li><a href="https://yourstudio.dev/">Home</a></li>
+          <li><a href="https://yourstudio.dev/yournotetaking/changelog">ChangeLog</a></li>
+          <li><a href="https://yourstudio.dev/contact">Contact</a></li>
+          <li><a href="https://chromewebstore.google.com/detail/hmfipnlgifajcolibanjejdlfebmenio?utm_source=item-share-cb">Download</a></li>
+        </ul>
+        <button class="btn btn-primary">Add to Chrome</button>
+        <button class="mobile-menu-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <button class="mobile-menu-close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <ul class="mobile-nav-links">
+      <li><a href="https://yourstudio.dev/404">Features</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+    </ul>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="parallax-bg"></div>
+    <div class="floating-dots" aria-hidden="true">
+      <svg width="400" height="400" viewBox="0 0 100 100" fill="none" style="position: absolute; top: 10%; right: 5%; opacity: 0.1; z-index: 0;">
+        <circle cx="10" cy="10" r="1" fill="white" />
+        <circle cx="30" cy="15" r="1" fill="white" />
+        <circle cx="50" cy="30" r="1" fill="white" />
+        <circle cx="70" cy="10" r="1" fill="white" />
+        <circle cx="90" cy="40" r="1" fill="white" />
+        <circle cx="20" cy="50" r="1" fill="white" />
+        <circle cx="40" cy="60" r="1" fill="white" />
+        <circle cx="60" cy="70" r="1" fill="white" />
+        <circle cx="80" cy="80" r="1" fill="white" />
+        <circle cx="10" cy="90" r="1" fill="white" />
+      </svg>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>Capture Ideas Instantly</h1>
+        <p>YourNoteTaking is a powerful Chrome extension that helps you save notes, links, and thoughts while browsing. Organize your digital life with just a click.</p>
+        <div class="hero-buttons">
+          <a href="https://chromewebstore.google.com/detail/hmfipnlgifajcolibanjejdlfebmenio?utm_source=item-share-cb" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="8 17 12 21 16 17"></polyline>
+              <line x1="12" y1="12" x2="12" y2="21"></line>
+              <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+            </svg>
+            Add to Chrome
+          </a>
+          <a href="#features" class="btn btn-secondary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            Learn More
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="yournotetakinge.png" alt="ynt">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Powerful Features</h2>
+        <p>Your Note Taking is a simple and efficient note-taking extension designed to help you stay organized and productive while browsing the web. Whether you want to jot down quick thoughts, make to-do lists, or save important information, our extension provides a convenient way to capture and manage your notes.
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="17 1 21 5 17 9"></polyline>
+              <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+              <polyline points="7 23 3 19 7 15"></polyline>
+              <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <h3>Smart Search</h3>
+          <p>Find any note instantly with our powerful search functionality.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          </div>
+          <h3>Tags & Categories</h3>
+          <p>Organize your notes with custom tags and categories for easy retrieval.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <h3>Private & Secure</h3>
+          <p>Your data is encrypted and never shared with third parties.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+          </div>
+          <h3>Mobile Friendly</h3>
+          <p>Access your notes on mobile through our companion app or web interface.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>Getting started with YourNoteTaking is quick and easy</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Install</h3>
+          <p>Add YourNoteTaking to Chrome from the Web Store</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Activate</h3>
+          <p>Click the extension icon or use the shortcut</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Capture</h3>
+          <p>Write your note or clip content from the page</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Disperse</h3>
+          <p>Delete once your done</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Section -->
+  <section class="demo" id="demo">
+    <div class="container">
+      <div class="section-header">
+        <h2>See YourNoteTaking in Action</h2>
+        <p>Watch how easy it is to capture and organize your thoughts</p>
+      </div>
+      <img src="yournotetakinge.png" alt="ynt" class="extension-preview">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section class="download" id="download">
+    <div class="parallax-bg"></div>
+    <div class="floating-dots" aria-hidden="true">
+      <svg width="400" height="400" viewBox="0 0 100 100" fill="none" style="position: absolute; bottom: 10%; left: 5%; opacity: 0.1; z-index: 0; transform: rotate(180deg);">
+        <circle cx="10" cy="10" r="1" fill="white" />
+        <circle cx="30" cy="15" r="1" fill="white" />
+        <circle cx="50" cy="30" r="1" fill="white" />
+        <circle cx="70" cy="10" r="1" fill="white" />
+        <circle cx="90" cy="40" r="1" fill="white" />
+        <circle cx="20" cy="50" r="1" fill="white" />
+        <circle cx="40" cy="60" r="1" fill="white" />
+        <circle cx="60" cy="70" r="1" fill="white" />
+        <circle cx="80" cy="80" r="1" fill="white" />
+        <circle cx="10" cy="90" r="1" fill="white" />
+      </svg>
+    </div>
+    <div class="container">
+      <div class="download-content">
+        <h2>Ready to Boost Your Productivity?</h2>
+        <p>Join over 70 users who have transformed their browsing experience with YourNoteTaking</p>
+        <a href="https://chromewebstore.google.com/detail/hmfipnlgifajcolibanjejdlfebmenio?utm_source=item-share-cb" class="btn btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="8 17 12 21 16 17"></polyline>
+            <line x1="12" y1="12" x2="12" y2="21"></line>
+            <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+          </svg>
+          Add to Chrome — It's Free
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>YourNoteTaking</h3>
+          <p>The ultimate note-taking extension for Chrome. Capture ideas instantly while browsing.</p>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2025 YourStudio. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP Animation Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+  
+  <!-- Main JavaScript -->
+  <script>
+    // Initialize GSAP
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu functionality
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+      const mobileMenuCloseBtn = document.querySelector('.mobile-menu-close');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+      });
+      
+      mobileMenuCloseBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+      
+      // Header scroll effect
+      const header = document.getElementById('header');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+      
+      // Hero animations
+      const heroTl = gsap.timeline();
+      
+      heroTl
+        .from('.logo', { 
+          duration: 1, 
+          y: -20, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        })
+        .from('.nav-links li', { 
+          duration: 1, 
+          y: -20, 
+          opacity: 0, 
+          stagger: 0.1, 
+          ease: 'power3.out' 
+        }, "-=0.5")
+        .from('.hero-content h1', { 
+          duration: 1, 
+          y: 30, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        }, "-=0.7")
+        .from('.hero-content p', { 
+          duration: 1, 
+          y: 30, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        }, "-=0.7")
+        .from('.hero-buttons', { 
+          duration: 1, 
+          y: 30, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        }, "-=0.7")
+        .to('.hero-image', { 
+          duration: 1.2, 
+          opacity: 1, 
+          ease: 'power3.out' 
+        }, "-=0.5")
+        .to('.note-card', { 
+          duration: 1, 
+          opacity: 1, 
+          y: 0, 
+          ease: 'back.out(1.7)' 
+        }, "-=0.8");
+      
+      // Parallax scrolling effect for hero section
+      gsap.to('.hero', {
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        },
+        backgroundPosition: '50% 100%',
+        ease: 'none'
+      });
+      
+      // Floating animation for hero image
+      gsap.to('.hero-image', {
+        y: 20,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+      });
+      
+      // Text reveal animation for section headers
+      const splitTextElements = document.querySelectorAll('.section-header h2');
+      
+      splitTextElements.forEach(element => {
+        const text = element.textContent;
+        element.innerHTML = '';
+        
+        for (let i = 0; i < text.length; i++) {
+          const span = document.createElement('span');
+          span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+          span.style.display = 'inline-block';
+          span.style.opacity = '0';
+          span.style.transform = 'translateY(20px)';
+          element.appendChild(span);
+        }
+        
+        ScrollTrigger.create({
+          trigger: element,
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(element.children, {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.02,
+              ease: 'power3.out'
+            });
+          },
+          once: true
+        });
+      });
+      
+      // Features section animations with staggered cards
+      gsap.from('.feature-card', {
+        scrollTrigger: {
+          trigger: '.features',
+          start: 'top 80%'
+        },
+        duration: 0.8,
+        y: 50,
+        opacity: 0,
+        stagger: {
+          each: 0.1,
+          from: "center",
+          grid: "auto"
+        },
+        ease: 'power3.out'
+      });
+      
+      // 3D tilt effect on feature cards
+      const cards = document.querySelectorAll('.feature-card');
+      
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const xPercent = x / rect.width - 0.5;
+          const yPercent = y / rect.height - 0.5;
+          
+          gsap.to(card, {
+            rotationY: xPercent * 10,
+            rotationX: yPercent * -10,
+            transformPerspective: 1000,
+            duration: 0.5,
+            ease: 'power1.out'
+          });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            rotationY: 0,
+            rotationX: 0,
+            duration: 0.5,
+            ease: 'power1.out'
+          });
+        });
+      });
+      
+      // Add glow effect to feature icons on hover
+      const featureCards = document.querySelectorAll('.feature-card');
+      
+      featureCards.forEach(card => {
+        const icon = card.querySelector('.feature-icon');
+        
+        card.addEventListener('mouseenter', () => {
+          gsap.to(icon, { duration: 0.3, className: '+=glow', ease: 'power1.out' });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          gsap.to(icon, { duration: 0.3, className: '-=glow', ease: 'power1.in' });
+        });
+      });
+      
+      // How it works section with counter animation
+      const steps = document.querySelectorAll('.step');
+      
+      steps.forEach((step, index) => {
+        const numberElement = step.querySelector('.step-number');
+        
+        ScrollTrigger.create({
+          trigger: step,
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.fromTo(step, 
+              { y: 50, opacity: 0 },
+              { 
+                y: 0, 
+                opacity: 1, 
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: 'power3.out'
+              }
+            );
+            
+            // Number counter animation
+            gsap.from(numberElement, {
+              textContent: 0,
+              duration: 1.5,
+              ease: 'power2.out',
+              snap: { textContent: 1 },
+              stagger: 1,
+              delay: index * 0.1 + 0.3
+            });
+          },
+          once: true
+        });
+      });
+      
+      // Horizontal scroll for steps on mobile
+      if (window.innerWidth <= 768) {
+        const stepsContainer = document.querySelector('.steps');
+        
+        gsap.to('.steps', {
+          scrollTrigger: {
+            trigger: '.steps',
+            start: 'top 80%',
+            end: 'bottom 20%',
+            scrub: true
+          },
+          x: () => -(stepsContainer.scrollWidth - window.innerWidth + 48),
+          ease: 'none'
+        });
+      }
+      
+      // Demo section animations with sequence
+      const demoTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.demo',
+          start: 'top 60%'
+        }
+      });
+      
+      // Create cursor animation
+      demoTimeline
+        .from('.demo-container', {
+          y: 100,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out'
+        })
+        .to('.cursor', { 
+          duration: 0.5, 
+          opacity: 1 
+        })
+        .to('.cursor', { 
+          duration: 1, 
+          x: 300, 
+          y: 100, 
+          ease: 'power1.inOut' 
+        })
+        .to('.demo-screen .note-card', { 
+          duration: 0.8, 
+          opacity: 1, 
+          scale: 1, 
+          ease: 'back.out(1.7)' 
+        })
+        .to('.cursor', { 
+          duration: 0.8, 
+          x: 350, 
+          y: 150, 
+          ease: 'power1.inOut' 
+        })
+        .to('.cursor', { 
+          duration: 0.1, 
+          scale: 0.9 
+        })
+        .to('.cursor', { 
+          duration: 0.1, 
+          scale: 1 
+        })
+        .to('.demo-screen .note-card', { 
+          duration: 0.3, 
+          scale: 1.05, 
+          ease: 'power1.out' 
+        })
+        .to('.demo-screen .note-card', { 
+          duration: 0.3, 
+          scale: 1, 
+          ease: 'power1.in' 
+        });
+      
+      // Scroll-triggered reveal for download section
+      gsap.set('.download-content > *', { opacity: 0, y: 30 });
+      
+      ScrollTrigger.create({
+        trigger: '.download',
+        start: 'top 70%',
+        onEnter: () => {
+          gsap.to('.download-content > *', {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: 'power3.out'
+          });
+        },
+        once: true
+      });
+      
+      // Parallax background effect for download section
+      gsap.fromTo('.download', 
+        { backgroundPosition: '50% 0%' },
+        {
+          backgroundPosition: '50% 100%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.download',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+      
+      // Footer reveal animation
+      gsap.from('.footer-column', {
+        scrollTrigger: {
+          trigger: 'footer',
+          start: 'top 90%'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out'
+      });
+      
+      // Social icons hover animation
+      const socialIcons = document.querySelectorAll('.social-icon');
+      
+      socialIcons.forEach(icon => {
+        icon.addEventListener('mouseenter', () => {
+          gsap.to(icon, {
+            y: -5,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+        
+        icon.addEventListener('mouseleave', () => {
+          gsap.to(icon, {
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+      });
+      
+      // Button hover animations
+      const buttons = document.querySelectorAll('.btn');
+      
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+          gsap.to(button, { duration: 0.3, scale: 1.05, ease: 'power1.out' });
+        });
+        
+        button.addEventListener('mouseleave', () => {
+          gsap.to(button, { duration: 0.3, scale: 1, ease: 'power1.in' });
+        });
+      });
+      
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            // Close mobile menu if open
+            mobileMenu.classList.remove('active');
+            
+            // Smooth scroll with GSAP
+            gsap.to(window, {
+              duration: 1,
+              scrollTo: {
+                y: targetElement,
+                offsetY: 80
+              },
+              ease: 'power3.inOut'
+            });
+          }
+        });
+      });
+      
+      // Create scroll-triggered progress bar
+      const body = document.body;
+      const progressBar = document.createElement('div');
+      progressBar.className = 'scroll-progress';
+      progressBar.style.position = 'fixed';
+      progressBar.style.top = '0';
+      progressBar.style.left = '0';
+      progressBar.style.height = '3px';
+      progressBar.style.width = '0%';
+      progressBar.style.backgroundColor = 'var(--accent)';
+      progressBar.style.zIndex = '1000';
+      progressBar.style.transition = 'opacity 0.3s ease';
+      body.appendChild(progressBar);
+      
+      // Update progress bar on scroll
+      gsap.to(progressBar, {
+        width: '100%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.3
+        }
+      });
+      
+      // Hide progress bar when at the top
+      ScrollTrigger.create({
+        trigger: 'body',
+        start: 'top top',
+        end: 'top+=100 top',
+        onLeave: () => gsap.to(progressBar, { opacity: 1, duration: 0.3 }),
+        onEnterBack: () => gsap.to(progressBar, { opacity: 0, duration: 0.3 }),
+        scrub: true
+      });
+      
+      // Reveal animations for all sections
+      const sections = document.querySelectorAll('section');
+      
+      sections.forEach(section => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          },
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          ease: 'power3.out'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
