@@ -1,11 +1,1411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YourStudio | Not avaible</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YourStudio | Online Development</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --background: #0a0a0a;
+      --card-bg: #111111;
+      --card-hover: #1a1a1a;
+      --text: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--background);
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 1.5rem;
+    }
+    
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 1.5rem;
+    }
+    
+    h3 {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+      font-size: clamp(1rem, 2vw, 1.125rem);
+    }
+    
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      outline: none;
+      text-decoration: none;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background-color: var(--accent);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    /* Header styles */
+    header {
+      padding: 1.5rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(10, 10, 10, 0.8);
+    }
+    
+    header.scrolled {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+    
+    .nav-links a:hover {
+      color: var(--text);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, rgba(10, 10, 10, 1) 0%, rgba(30, 30, 30, 1) 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 180px 0 100px;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, rgba(10, 10, 10, 0) 50%);
+      z-index: 0;
+    }
+    
+    .hero-content {
+      max-width: 600px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .hero-image {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 45%;
+      max-width: 600px;
+      z-index: 1;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Services section */
+    .services {
+      padding: 100px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+    
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .service-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      transition: var(--transition);
+      height: 100%;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-5px);
+      background-color: var(--card-hover);
+    }
+    
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--border-radius-sm);
+      background-color: rgba(99, 102, 241, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    
+    /* About section */
+    .about {
+      padding: 100px 0;
+      background-color: rgba(255, 255, 255, 0.02);
+      border-radius: var(--border-radius);
+    }
+    
+    .about-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 4rem;
+      align-items: center;
+    }
+    
+    .about-text {
+      max-width: 500px;
+    }
+    
+    .about-image {
+      position: relative;
+    }
+    
+    .about-image img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .stat {
+      text-align: left;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Portfolio section */
+    .portfolio {
+      padding: 100px 0;
+    }
+    
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .portfolio-item {
+      position: relative;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
+    
+    .portfolio-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .portfolio-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+    
+    .portfolio-item:hover .portfolio-image {
+      transform: scale(1.05);
+    }
+    
+    .portfolio-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .portfolio-category {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Testimonials section */
+    .testimonials {
+      padding: 100px 0;
+      background-color: rgba(255, 255, 255, 0.02);
+      border-radius: var(--border-radius);
+    }
+    
+    .testimonials-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .testimonial {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    .testimonial:last-child {
+      margin-bottom: 0;
+    }
+    
+    .testimonial-content {
+      font-size: 1.1rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .author-info h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .author-info p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+    
+    .testimonial-quote {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 3rem;
+      color: rgba(99, 102, 241, 0.1);
+      line-height: 1;
+    }
+    
+    /* CTA section */
+    .cta {
+      padding: 100px 0;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.2) 0%, rgba(10, 10, 10, 0) 60%);
+      z-index: 0;
+    }
+    
+    .cta-content {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 80px 0 40px;
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      margin-top: 100px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+    }
+    
+    .footer-column h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .footer-column ul {
+      list-style: none;
+    }
+    
+    .footer-column ul li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .footer-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .footer-column a:hover {
+      color: var(--text);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    
+    .social-icon:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    
+    .social-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 1024px) {
+      .hero-image {
+        width: 40%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero {
+        padding: 150px 0 80px;
+      }
+      
+      .hero-content {
+        max-width: 100%;
+        text-align: center;
+      }
+      
+      .hero-buttons {
+        justify-content: center;
+      }
+      
+      .hero-image {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin: 3rem auto 0;
+        right: auto;
+        top: auto;
+        transform: none;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
+        background-color: var(--card-bg);
+        padding: 2rem;
+        z-index: 1000;
+        transition: var(--transition);
+      }
+      
+      .mobile-menu.active {
+        right: 0;
+      }
+      
+      .mobile-menu-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      
+      .mobile-nav-links {
+        list-style: none;
+        margin-top: 3rem;
+      }
+      
+      .mobile-nav-links li {
+        margin-bottom: 1.5rem;
+      }
+      
+      .mobile-nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: block;
+        padding: 0.5rem 0;
+      }
+      
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-text {
+        max-width: 100%;
+      }
+    }
+    
+    /* Animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .glow {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    }
+    
+    /* Scroll animations */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+    
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Parallax container */
+    .parallax-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    /* Floating elements */
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>This page is not yet avaible</h1>
+  <!-- Header -->
+  <header id="header">
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <img src="yourstudiologo.png" alt="ytl" width="24" height="24" >
+        </img>
+          YourStudio
+        </div>
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="https://yourstudio.dev/yournotetaking/">YourNoteTaking</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="btn btn-primary">Get Started</button>
+        <button class="mobile-menu-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <button class="mobile-menu-close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    </ul>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="parallax-bg"></div>
+    <div class="floating-dots" aria-hidden="true">
+      <svg width="400" height="400" viewBox="0 0 100 100" fill="none" style="position: absolute; top: 10%; right: 5%; opacity: 0.1; z-index: 0;">
+        <circle cx="10" cy="10" r="1" fill="white" />
+        <circle cx="30" cy="15" r="1" fill="white" />
+        <circle cx="50" cy="30" r="1" fill="white" />
+        <circle cx="70" cy="10" r="1" fill="white" />
+        <circle cx="90" cy="40" r="1" fill="white" />
+        <circle cx="20" cy="50" r="1" fill="white" />
+        <circle cx="40" cy="60" r="1" fill="white" />
+        <circle cx="60" cy="70" r="1" fill="white" />
+        <circle cx="80" cy="80" r="1" fill="white" />
+        <circle cx="10" cy="90" r="1" fill="white" />
+      </svg>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>Creative Solutions for Digital Success</h1>
+        <p>YourStudio is a full-service creative agency specializing in web design, branding, and digital marketing. We help businesses stand out in the digital landscape with innovative solutions tailored to their unique needs.</p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            Start a Project
+          </a>
+          <a href="#portfolio" class="btn btn-secondary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            View Our Work
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="placeholder1.jpg" alt="placeholder1">
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <h2>What We Do</h2>
+        <p>We make and desging technical software and programs for people to use.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card scroll-reveal">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <h3>Web Design & Development</h3>
+          <p>Custom websites that are visually stunning, responsive, and optimized for performance and user experience.</p>
+        </div>
+        <div class="service-card scroll-reveal">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          </div>
+          <h3>Branding & Identity</h3>
+          <p>Comprehensive branding for our software built in house.</p>
+        </div>
+        <div class="service-card scroll-reveal">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <h3>Digital Marketing</h3>
+          <p>Strategic marketing campaigns across our media platforms.</p>
+        </div>
+        <div class="service-card scroll-reveal">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </div>
+          <h3>Color Contrast</h3>
+          <p>Strategicly picked colors for any of our software.</p>
+        </div>
+        <div class="service-card scroll-reveal">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+            </svg>
+          </div>
+          <h3>UI/UX Design</h3>
+          <p>User-centered design solutions that enhance usability, accessibility, and overall user satisfaction.</p>
+        </div>
+        <div class="service-card scroll-reveal">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+          </div>
+          <h3>Content Creation</h3>
+          <p>Creation of marketing for media.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text scroll-reveal">
+          <h2>About YourStudio</h2>
+          <p>We help peoples ideas come to life with our skills and your creativity.</p>
+          <p>Our team of designers, developers, marketers, and content creators work collaboratively to deliver integrated solutions that drive results. We believe in building long-term relationships with our clients, understanding their unique challenges, and crafting strategies that align with their business goals.</p>
+          <div class="about-stats">
+            <div class="stat">
+              <div class="stat-number">1+</div>
+              <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">0</div>
+              <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">5</div>
+              <div class="stat-label">Team Members</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-image scroll-reveal">
+          <img src="placeholder2.jpg" alt="YourStudio team">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our Portfolio</h2>
+        <p>Explore some of our recent projects and see how we've helped businesses across various industries achieve their digital goals.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item scroll-reveal">
+          <img src="https://placehold.co/600x400/111111/6366f1?text=Project+1" alt="Project 1" class="portfolio-image">
+          <div class="portfolio-overlay">
+            <h3 class="portfolio-title">Eco-Friendly E-commerce</h3>
+            <p class="portfolio-category">Web Design, Development</p>
+          </div>
+        </div>
+        <div class="portfolio-item scroll-reveal">
+          <img src="https://placehold.co/600x400/111111/6366f1?text=Project+2" alt="Project 2" class="portfolio-image">
+          <div class="portfolio-overlay">
+            <h3 class="portfolio-title">Tech Startup Rebrand</h3>
+            <p class="portfolio-category">Branding, Identity</p>
+          </div>
+        </div>
+        <div class="portfolio-item scroll-reveal">
+          <img src="https://placehold.co/600x400/111111/6366f1?text=Project+3" alt="Project 3" class="portfolio-image">
+          <div class="portfolio-overlay">
+            <h3 class="portfolio-title">Luxury Real Estate</h3>
+            <p class="portfolio-category">Photography, Web Design</p>
+          </div>
+        </div>
+        <div class="portfolio-item scroll-reveal">
+          <img src="https://placehold.co/600x400/111111/6366f1?text=Project+4" alt="Project 4" class="portfolio-image">
+          <div class="portfolio-overlay">
+            <h3 class="portfolio-title">Fitness App UI</h3>
+            <p class="portfolio-category">UI/UX Design, Development</p>
+          </div>
+        </div>
+        <div class="portfolio-item scroll-reveal">
+          <img src="https://placehold.co/600x400/111111/6366f1?text=Project+5" alt="Project 5" class="portfolio-image">
+          <div class="portfolio-overlay">
+            <h3 class="portfolio-title">Restaurant Marketing</h3>
+            <p class="portfolio-category">Digital Marketing, Content</p>
+          </div>
+        </div>
+        <div class="portfolio-item scroll-reveal">
+          <img src="https://placehold.co/600x400/111111/6366f1?text=Project+6" alt="Project 6" class="portfolio-image">
+          <div class="portfolio-overlay">
+            <h3 class="portfolio-title">Fashion Lookbook</h3>
+            <p class="portfolio-category">Photography, Design</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <h2>Client Testimonials</h2>
+        <p>Don't just take our word for it. Here's what our clients have to say about working with YourStudio.</p>
+      </div>
+      <div class="testimonials-container">
+        <div class="testimonial scroll-reveal">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-content">YourStudio transformed our online presence completely. Their team took the time to understand our business goals and delivered a website that not only looks amazing but also drives real results. The increase in leads since launch has been remarkable.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="https://placehold.co/100x100/111111/6366f1?text=J" alt="John Smith">
+            </div>
+            <div class="author-info">
+              <h4>John Smith</h4>
+              <p>CEO, Not Real</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial scroll-reveal">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-content">Working with YourStudio on our rebranding was a game-changer. They captured the essence of our company and created a visual identity that resonates with our target audience. Their strategic approach to design and marketing has helped us stand out in a competitive market.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="https://placehold.co/100x100/111111/6366f1?text=S" alt="Sarah Johnson">
+            </div>
+            <div class="author-info">
+              <h4>Sarah Johnson</h4>
+              <p>Marketing Director, Not Real</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial scroll-reveal">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-content">The team at YourStudio are true professionals. From the initial consultation to the final delivery, they were communicative, creative, and committed to excellence. Our e-commerce site has seen a 40% increase in conversions since the redesign.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="https://placehold.co/100x100/111111/6366f1?text=M" alt="Michael Chen">
+            </div>
+            <div class="author-info">
+              <h4>Michael Chen</h4>
+              <p>Founder, Not Real</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta" id="contact">
+    <div class="parallax-bg"></div>
+    <div class="floating-dots" aria-hidden="true">
+      <svg width="400" height="400" viewBox="0 0 100 100" fill="none" style="position: absolute; bottom: 10%; left: 5%; opacity: 0.1; z-index: 0; transform: rotate(180deg);">
+        <circle cx="10" cy="10" r="1" fill="white" />
+        <circle cx="30" cy="15" r="1" fill="white" />
+        <circle cx="50" cy="30" r="1" fill="white" />
+        <circle cx="70" cy="10" r="1" fill="white" />
+        <circle cx="90" cy="40" r="1" fill="white" />
+        <circle cx="20" cy="50" r="1" fill="white" />
+        <circle cx="40" cy="60" r="1" fill="white" />
+        <circle cx="60" cy="70" r="1" fill="white" />
+        <circle cx="80" cy="80" r="1" fill="white" />
+        <circle cx="10" cy="90" r="1" fill="white" />
+      </svg>
+    </div>
+    <div class="container">
+      <div class="cta-content scroll-reveal">
+        <h2>Ready to Start Your Project?</h2>
+        <p>Let's collaborate to bring your vision to life. Contact us today to discuss your project and discover how YourStudio can help you achieve your digital goals.</p>
+        <a href="https://yourstudio.dev/contact/" class="btn btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>YourStudio</h3>
+          <p>None of these links here work, They will be implemented in the future.</p>
+          <div class="social-links">
+            <a href="#" class="social-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#services">Web Design</a></li>
+            <li><a href="#services">Branding</a></li>
+            <li><a href="#services">Digital Marketing</a></li>
+            <li><a href="#services">Photography</a></li>
+            <li><a href="#services">UI/UX Design</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="https://yourstudio.dev/404">no-email@the.moment</a></li>
+            <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
+            <li><a href="#">123 Creative St, Suite 100</a></li>
+            <li><a href="#">New York, NY 10001</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2025 YourStudio. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP Animation Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+  
+  <!-- Main JavaScript -->
+  <script>
+    // Initialize GSAP
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu functionality
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+      const mobileMenuCloseBtn = document.querySelector('.mobile-menu-close');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.add('active');
+        });
+      }
+      
+      if (mobileMenuCloseBtn) {
+        mobileMenuCloseBtn.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+        });
+      }
+      
+      // Header scroll effect
+      const header = document.getElementById('header');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+      
+      // Hero animations
+      const heroTl = gsap.timeline();
+      
+      heroTl
+        .from('.logo', { 
+          duration: 1, 
+          y: -20, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        })
+        .from('.nav-links li', { 
+          duration: 1, 
+          y: -20, 
+          opacity: 0, 
+          stagger: 0.1, 
+          ease: 'power3.out' 
+        }, "-=0.5")
+        .from('.hero-content h1', { 
+          duration: 1, 
+          y: 30, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        }, "-=0.7")
+        .from('.hero-content p', { 
+          duration: 1, 
+          y: 30, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        }, "-=0.7")
+        .from('.hero-buttons', { 
+          duration: 1, 
+          y: 30, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        }, "-=0.7")
+        .from('.hero-image', { 
+          duration: 1.2, 
+          x: 50, 
+          opacity: 0, 
+          ease: 'power3.out' 
+        }, "-=0.5");
+      
+      // Parallax scrolling effect for hero section
+      gsap.to('.hero', {
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        },
+        backgroundPosition: '50% 100%',
+        ease: 'none'
+      });
+      
+      // Floating animation for hero image
+      gsap.to('.hero-image', {
+        y: 20,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+      });
+      
+      // Text reveal animation for section headers
+      const splitTextElements = document.querySelectorAll('.section-header h2');
+      
+      splitTextElements.forEach(element => {
+        const text = element.textContent;
+        element.innerHTML = '';
+        
+        for (let i = 0; i < text.length; i++) {
+          const span = document.createElement('span');
+          span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+          span.style.display = 'inline-block';
+          span.style.opacity = '0';
+          span.style.transform = 'translateY(20px)';
+          element.appendChild(span);
+        }
+        
+        ScrollTrigger.create({
+          trigger: element,
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.to(element.children, {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.02,
+              ease: 'power3.out'
+            });
+          },
+          once: true
+        });
+      });
+      
+      // Scroll reveal animations
+      const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
+      
+      scrollRevealElements.forEach((element, index) => {
+        ScrollTrigger.create({
+          trigger: element,
+          start: 'top 85%',
+          onEnter: () => {
+            gsap.to(element, {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              delay: index % 3 * 0.1,
+              ease: 'power3.out'
+            });
+          },
+          once: true
+        });
+      });
+      
+      // Service card hover effect
+      const serviceCards = document.querySelectorAll('.service-card');
+      
+      serviceCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card.querySelector('.service-icon'), {
+            y: -5,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card.querySelector('.service-icon'), {
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.in'
+          });
+        });
+      });
+      
+      // Portfolio item hover effect
+      const portfolioItems = document.querySelectorAll('.portfolio-item');
+      
+      portfolioItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          gsap.to(item.querySelector('.portfolio-overlay'), {
+            opacity: 1,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+          
+          gsap.to(item.querySelector('.portfolio-image'), {
+            scale: 1.05,
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+        });
+        
+        item.addEventListener('mouseleave', () => {
+          gsap.to(item.querySelector('.portfolio-overlay'), {
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power2.in'
+          });
+          
+          gsap.to(item.querySelector('.portfolio-image'), {
+            scale: 1,
+            duration: 0.5,
+            ease: 'power2.in'
+          });
+        });
+      });
+      
+      // Counter animation for stats
+      const statNumbers = document.querySelectorAll('.stat-number');
+      
+      statNumbers.forEach(stat => {
+        const finalValue = parseInt(stat.textContent);
+        
+        ScrollTrigger.create({
+          trigger: stat,
+          start: 'top 80%',
+          onEnter: () => {
+            gsap.fromTo(stat, 
+              { textContent: '0' },
+              {
+                duration: 2,
+                textContent: finalValue,
+                snap: { textContent: 1 },
+                ease: 'power2.out'
+              }
+            );
+          },
+          once: true
+        });
+      });
+      
+      // Button hover animations
+      const buttons = document.querySelectorAll('.btn');
+      
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+          gsap.to(button, { duration: 0.3, scale: 1.05, ease: 'power1.out' });
+        });
+        
+        button.addEventListener('mouseleave', () => {
+          gsap.to(button, { duration: 0.3, scale: 1, ease: 'power1.in' });
+        });
+      });
+      
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            // Close mobile menu if open
+            if (mobileMenu) {
+              mobileMenu.classList.remove('active');
+            }
+            
+            // Smooth scroll with GSAP
+            gsap.to(window, {
+              duration: 1,
+              scrollTo: {
+                y: targetElement,
+                offsetY: 80
+              },
+              ease: 'power3.inOut'
+            });
+          }
+        });
+      });
+      
+      // Create scroll-triggered progress bar
+      const body = document.body;
+      const progressBar = document.createElement('div');
+      progressBar.className = 'scroll-progress';
+      progressBar.style.position = 'fixed';
+      progressBar.style.top = '0';
+      progressBar.style.left = '0';
+      progressBar.style.height = '3px';
+      progressBar.style.width = '0%';
+      progressBar.style.backgroundColor = 'var(--accent)';
+      progressBar.style.zIndex = '1000';
+      progressBar.style.transition = 'opacity 0.3s ease';
+      body.appendChild(progressBar);
+      
+      // Update progress bar on scroll
+      gsap.to(progressBar, {
+        width: '100%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.3
+        }
+      });
+      
+      // Hide progress bar when at the top
+      ScrollTrigger.create({
+        trigger: 'body',
+        start: 'top top',
+        end: 'top+=100 top',
+        onLeave: () => gsap.to(progressBar, { opacity: 1, duration: 0.3 }),
+        onEnterBack: () => gsap.to(progressBar, { opacity: 0, duration: 0.3 }),
+        scrub: true
+      });
+      
+      // Social icons hover animation
+      const socialIcons = document.querySelectorAll('.social-icon');
+      
+      socialIcons.forEach(icon => {
+        icon.addEventListener('mouseenter', () => {
+          gsap.to(icon, {
+            y: -5,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+        
+        icon.addEventListener('mouseleave', () => {
+          gsap.to(icon, {
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>
