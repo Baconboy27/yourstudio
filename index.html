@@ -162,13 +162,16 @@
       font-size: 1.5rem;
       cursor: pointer;
     }
-    
-    /* Hero section */
+
+    /* Hero section with integrated carousel */
     .hero {
       background: linear-gradient(135deg, rgba(10, 10, 10, 1) 0%, rgba(30, 30, 30, 1) 100%);
       position: relative;
       overflow: hidden;
       padding: 180px 0 100px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
     }
     
     .hero::before {
@@ -181,9 +184,17 @@
       background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, rgba(10, 10, 10, 0) 50%);
       z-index: 0;
     }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
     
     .hero-content {
-      max-width: 600px;
       position: relative;
       z-index: 2;
     }
@@ -193,22 +204,174 @@
       gap: 1rem;
       margin-top: 2rem;
     }
-    
-    .hero-image {
+
+    /* Floating elements animation */
+    .floating-icon {
       position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 45%;
-      max-width: 600px;
-      z-index: 1;
+      color: rgba(99, 102, 241, 0.3);
+      font-size: 2rem;
+      animation: float 6s ease-in-out infinite;
     }
-    
-    .hero-image img {
-      width: 100%;
-      height: auto;
+
+    .floating-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+    .floating-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+    .floating-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+    .floating-icon:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 1s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(5deg); }
+      66% { transform: translateY(10px) rotate(-3deg); }
+    }
+
+    /* Hero Carousel Styles */
+    .hero-carousel {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .hero-carousel-wrapper {
+      position: relative;
+      overflow: hidden;
       border-radius: var(--border-radius);
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-carousel-track {
+      display: flex;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    .hero-carousel-slide {
+      min-width: 100%;
+      position: relative;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    .hero-slide-content {
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(129, 140, 248, 0.05) 100%);
+    }
+
+    .hero-slide-badge {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.2);
+      color: var(--accent);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .hero-slide-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-slide-description {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      max-width: 400px;
+    }
+
+    .hero-slide-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
+    }
+
+    .hero-carousel-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hero-carousel-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-carousel-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.1);
+    }
+
+    .hero-carousel-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .hero-carousel-indicators {
+      display: flex;
+      gap: 0.5rem;
+      margin: 0 1rem;
+    }
+
+    .hero-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .hero-indicator.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+
+    .hero-carousel-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      transition: width 0.1s ease;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
+
+    /* Auto-play animation */
+    @keyframes heroSlideProgress {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    .hero-carousel-slide.active .hero-carousel-progress {
+      animation: heroSlideProgress 5s linear;
     }
     
     /* Services section */
@@ -535,8 +698,8 @@
     
     /* Responsive styles */
     @media (max-width: 1024px) {
-      .hero-image {
-        width: 40%;
+      .hero-grid {
+        gap: 2rem;
       }
     }
     
@@ -545,23 +708,23 @@
         padding: 150px 0 80px;
       }
       
-      .hero-content {
-        max-width: 100%;
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
         text-align: center;
+      }
+      
+      .hero-content {
+        order: 1;
+      }
+      
+      .hero-carousel {
+        order: 2;
+        max-width: 100%;
       }
       
       .hero-buttons {
         justify-content: center;
-      }
-      
-      .hero-image {
-        position: relative;
-        width: 100%;
-        max-width: 500px;
-        margin: 3rem auto 0;
-        right: auto;
-        top: auto;
-        transform: none;
       }
       
       .nav-links {
@@ -625,6 +788,29 @@
       .about-text {
         max-width: 100%;
       }
+
+      .hero-slide-content {
+        padding: 2rem 1.5rem;
+        min-height: 300px;
+      }
+
+      .hero-slide-title {
+        font-size: 1.5rem;
+      }
+
+      .hero-slide-icon {
+        font-size: 3rem;
+      }
+
+      .hero-carousel-controls {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .hero-carousel-btn {
+        width: 35px;
+        height: 35px;
+      }
     }
     
     /* Animations */
@@ -666,7 +852,7 @@
     .float {
       animation: float 6s ease-in-out infinite;
     }
-    
+
     @keyframes float {
       0% {
         transform: translateY(0px);
@@ -686,8 +872,7 @@
     <div class="container">
       <nav>
         <div class="logo">
-          <img src="yourstudiologo.png" alt="ytl" width="24" height="24" >
-        </img>
+          <img src="yourstudiologo.png" alt="YourStudio Logo" width="24" height="24">
           YourStudio
         </div>
         <ul class="nav-links">
@@ -717,11 +902,18 @@
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
+    <ul class="mobile-nav-links">
+      
     </ul>
   </div>
 
-  <!-- Hero Section -->
+  <!-- Hero Section with Integrated Carousel -->
   <section class="hero" id="home">
+    <div class="floating-icon">⚡</div>
+    <div class="floating-icon">🚀</div>
+    <div class="floating-icon">💡</div>
+    <div class="floating-icon">🎯</div>
+    
     <div class="parallax-bg"></div>
     <div class="floating-dots" aria-hidden="true">
       <svg width="400" height="400" viewBox="0 0 100 100" fill="none" style="position: absolute; top: 10%; right: 5%; opacity: 0.1; z-index: 0;">
@@ -737,29 +929,105 @@
         <circle cx="10" cy="90" r="1" fill="white" />
       </svg>
     </div>
+    
     <div class="container">
-      <div class="hero-content">
-        <h1>Creative Solutions for Digital Success</h1>
-        <p>YourStudio is a full-service creative agency specializing in web design, branding, and digital marketing. We help businesses stand out in the digital landscape with innovative solutions tailored to their unique needs.</p>
-        <div class="hero-buttons">
-          <a href="#contact" class="btn btn-primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-              <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-            Start a Project
-          </a>
-          <a href="#portfolio" class="btn btn-secondary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-            </svg>
-            View Our Work
-          </a>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1>Creative Solutions for Digital Success</h1>
+          <p>YourStudio is a full-service creative agency specializing in web design, branding, and digital marketing. We help businesses stand out in the digital landscape with innovative solutions tailored to their unique needs.</p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+              Start a Project
+            </a>
+            <a href="#portfolio" class="btn btn-secondary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              View Our Work
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="hero-image">
-        <img src="placeholder1.jpg" alt="placeholder1">
+        
+        <!-- Hero Carousel -->
+        <div class="hero-carousel">
+          <div class="hero-carousel-wrapper">
+            <div class="hero-carousel-track" id="heroCarouselTrack">
+              <!-- Slide 1 -->
+              <div class="hero-carousel-slide active">
+                <div class="hero-carousel-progress"></div>
+                <div class="hero-slide-content">
+                  <div class="hero-slide-icon">📒</div>
+                  <div class="hero-slide-badge">Preview</div>
+                  <h3 class="hero-slide-title">YourNoteTaking</h3>
+                  <p class="hero-slide-description">YourNoteTaking is a powerful Chrome extension that helps you save notes, links, and thoughts while browsing. Organize your digital life with just a click.</p>
+                  <a href="https://yourstudio.dev/yournotetaking" class="btn btn-primary">Learn More</a>
+                </div>
+              </div>
+
+              <!-- Slide 2 -->
+              <div class="hero-carousel-slide">
+                <div class="hero-carousel-progress"></div>
+                <div class="hero-slide-content">
+                  <div class="hero-slide-icon">⏲️</div>
+                  <div class="hero-slide-badge">In Development</div>
+                  <h3 class="hero-slide-title">YourTabTimer</h3>
+                  <p class="hero-slide-description">They say good things come to those who wait, and some just need a reminder.</p>
+                  <a href="https://dsc.gg/yourstudio" class="btn btn-primary">Join Discord</a>
+                </div>
+              </div>
+
+              <!-- Slide 3 -->
+              <div class="hero-carousel-slide">
+                <div class="hero-carousel-progress"></div>
+                <div class="hero-slide-content">
+                  <div class="hero-slide-icon">📒</div>
+                  <div class="hero-slide-badge">In Development</div>
+                  <h3 class="hero-slide-title">YourNoteTaking Desktop and Mobile</h3>
+                  <p class="hero-slide-description">YourNoteTaking is a powerful app coming to Mac, Windows, iPhone, Android and Linux</p>
+                  <a href="https://yourstudio.dev/yournotetaking/" class="btn btn-primary">Learn More</a>
+                </div>
+              </div>
+
+              <!-- Slide 4 -->
+              <div class="hero-carousel-slide">
+                <div class="hero-carousel-progress"></div>
+                <div class="hero-slide-content">
+                  <div class="hero-slide-icon">💻</div>
+                  <div class="hero-slide-badge">In Development</div>
+                  <h3 class="hero-slide-title">YourTheme</h3>
+                  <p class="hero-slide-description">Custom colors for any webpage.</p>
+                  <a href="https://yourstudio.dev/" class="btn btn-primary">Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-carousel-controls">
+            <button class="hero-carousel-btn" id="heroPrevBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15,18 9,12 15,6"></polyline>
+              </svg>
+            </button>
+            
+            <div class="hero-carousel-indicators" id="heroIndicators">
+              <div class="hero-indicator active" data-slide="0"></div>
+              <div class="hero-indicator" data-slide="1"></div>
+              <div class="hero-indicator" data-slide="2"></div>
+              <div class="hero-indicator" data-slide="3"></div>
+            </div>
+            
+            <button class="hero-carousel-btn" id="heroNextBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -769,7 +1037,7 @@
     <div class="container">
       <div class="section-header">
         <h2>What We Do</h2>
-        <p>We make and desging technical software and programs for people to use.</p>
+        <p>We make and design technical software and programs for people to use.</p>
       </div>
       <div class="services-grid">
         <div class="service-card scroll-reveal">
@@ -811,7 +1079,7 @@
             </svg>
           </div>
           <h3>Color Contrast</h3>
-          <p>Strategicly picked colors for any of our software.</p>
+          <p>Strategically picked colors for any of our software.</p>
         </div>
         <div class="service-card scroll-reveal">
           <div class="service-icon">
@@ -842,7 +1110,7 @@
       <div class="about-content">
         <div class="about-text scroll-reveal">
           <h2>About YourStudio</h2>
-          <p>We help peoples ideas come to life with our skills and your creativity.</p>
+          <p>We help people's ideas come to life with our skills and your creativity.</p>
           <p>Our team of designers, developers, marketers, and content creators work collaboratively to deliver integrated solutions that drive results. We believe in building long-term relationships with our clients, understanding their unique challenges, and crafting strategies that align with their business goals.</p>
           <div class="about-stats">
             <div class="stat">
@@ -1083,8 +1351,145 @@
     // Initialize GSAP
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
     
+    // Hero Carousel functionality
+    class HeroCarousel {
+      constructor() {
+        this.currentSlide = 0;
+        this.slides = document.querySelectorAll('.hero-carousel-slide');
+        this.totalSlides = this.slides.length;
+        this.track = document.getElementById('heroCarouselTrack');
+        this.indicators = document.querySelectorAll('.hero-indicator');
+        this.prevBtn = document.getElementById('heroPrevBtn');
+        this.nextBtn = document.getElementById('heroNextBtn');
+        this.autoPlayInterval = null;
+        this.autoPlayDelay = 5000;
+        this.isPlaying = true;
+        
+        this.init();
+      }
+      
+      init() {
+        this.bindEvents();
+        this.startAutoPlay();
+        this.updateCarousel();
+      }
+      
+      bindEvents() {
+        this.prevBtn.addEventListener('click', () => this.prevSlide());
+        this.nextBtn.addEventListener('click', () => this.nextSlide());
+        
+        this.indicators.forEach((indicator, index) => {
+          indicator.addEventListener('click', () => this.goToSlide(index));
+        });
+        
+        // Pause on hover
+        const carouselWrapper = document.querySelector('.hero-carousel-wrapper');
+        carouselWrapper.addEventListener('mouseenter', () => this.pauseAutoPlay());
+        carouselWrapper.addEventListener('mouseleave', () => this.startAutoPlay());
+        
+        // Pause on focus for accessibility
+        this.prevBtn.addEventListener('focus', () => this.pauseAutoPlay());
+        this.nextBtn.addEventListener('focus', () => this.pauseAutoPlay());
+        this.prevBtn.addEventListener('blur', () => this.startAutoPlay());
+        this.nextBtn.addEventListener('blur', () => this.startAutoPlay());
+      }
+      
+      updateCarousel() {
+        // Update track position
+        const translateX = -this.currentSlide * 100;
+        this.track.style.transform = `translateX(${translateX}%)`;
+        
+        // Update active slide
+        this.slides.forEach((slide, index) => {
+          slide.classList.toggle('active', index === this.currentSlide);
+        });
+        
+        // Update indicators
+        this.indicators.forEach((indicator, index) => {
+          indicator.classList.toggle('active', index === this.currentSlide);
+        });
+        
+        // Update button states for infinite loop
+        this.prevBtn.disabled = false;
+        this.nextBtn.disabled = false;
+        
+        // Animate slide content
+        this.animateSlideContent();
+      }
+      
+      animateSlideContent() {
+        const activeSlide = this.slides[this.currentSlide];
+        const slideContent = activeSlide.querySelector('.hero-slide-content');
+        
+        // Reset and animate slide content
+        gsap.fromTo(slideContent.children, 
+          { opacity: 0, y: 30 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 0.8, 
+            stagger: 0.1, 
+            ease: 'power3.out',
+            delay: 0.3
+          }
+        );
+      }
+      
+      nextSlide() {
+        this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+        this.updateCarousel();
+        this.resetAutoPlay();
+      }
+      
+      prevSlide() {
+        this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+        this.updateCarousel();
+        this.resetAutoPlay();
+      }
+      
+      goToSlide(index) {
+        if (index >= 0 && index < this.totalSlides && index !== this.currentSlide) {
+          this.currentSlide = index;
+          this.updateCarousel();
+          this.resetAutoPlay();
+        }
+      }
+      
+      startAutoPlay() {
+        if (!this.isPlaying) return;
+        
+        this.autoPlayInterval = setInterval(() => {
+          this.nextSlide();
+        }, this.autoPlayDelay);
+      }
+      
+      pauseAutoPlay() {
+        if (this.autoPlayInterval) {
+          clearInterval(this.autoPlayInterval);
+          this.autoPlayInterval = null;
+        }
+      }
+      
+      resetAutoPlay() {
+        this.pauseAutoPlay();
+        this.startAutoPlay();
+      }
+      
+      toggleAutoPlay() {
+        this.isPlaying = !this.isPlaying;
+        if (this.isPlaying) {
+          this.startAutoPlay();
+        } else {
+          this.pauseAutoPlay();
+        }
+      }
+    }
+    
     // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
+      // Initialize hero carousel
+      const heroCarousel = new HeroCarousel();
+      
       // Mobile menu functionality
       const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
       const mobileMenuCloseBtn = document.querySelector('.mobile-menu-close');
@@ -1148,7 +1553,7 @@
           opacity: 0, 
           ease: 'power3.out' 
         }, "-=0.7")
-        .from('.hero-image', { 
+        .from('.hero-carousel', { 
           duration: 1.2, 
           x: 50, 
           opacity: 0, 
@@ -1167,10 +1572,10 @@
         ease: 'none'
       });
       
-      // Floating animation for hero image
-      gsap.to('.hero-image', {
-        y: 20,
-        duration: 3,
+      // Floating animation for hero carousel
+      gsap.to('.hero-carousel', {
+        y: 10,
+        duration: 4,
         repeat: -1,
         yoyo: true,
         ease: 'power1.inOut'
@@ -1404,6 +1809,18 @@
             ease: 'power2.out'
           });
         });
+      });
+      
+      // Keyboard navigation for hero carousel
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          heroCarousel.prevSlide();
+        } else if (e.key === 'ArrowRight') {
+          heroCarousel.nextSlide();
+        } else if (e.key === ' ') {
+          e.preventDefault();
+          heroCarousel.toggleAutoPlay();
+        }
       });
     });
   </script>
