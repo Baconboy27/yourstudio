@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuminateOS | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><img width="260" height="44" src="luminateos.png" alt="logo"></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#download" class="download-btn">Download</a></li>
+            </ul>
+        </div>
+    </nav>
 
+    <!-- Home Section -->
+    <section id="home">
+        <div class="container">
+            <div class="section-content">
+                <h1>Welcome to LuminateOS</h1>
+                <img src="Luminate home.png" alt="Hero Image" class="hero-image">
+                <p>Experience the world of freedom, The world is your oyster.</p>
+                <a href="#about" class="cta-button">Explore More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-content">
+                <h2>About Us</h2>
+                <p>We are an experienced team of developers that have desgined LuminateOS just for you.</p>
+                <p>With years of experience in design and development, we have created the best OS</p>
+                <a href="#contact" class="cta-button">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-content">
+                <h2>Contact Us</h2>
+                <p>Contact us for any issues that you may have.</p>
+                <p><strong>Email:</strong> contact@luminateos.com</p>
+                <p><strong>Phone:</strong> +123456789</p>
+                <p><strong>Address:</strong> 123 Street Town</p>
+                <a href="mailto:contact@luminateos.com" class="cta-button">Send Email</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download">
+        <div class="container">
+            <div class="section-content">
+                <h2>Download</h2>
+                <p>Get access to LuminateOS</p>
+                <p>Our OS includes:</p>
+                <ul style="text-align: left; max-width: 400px; margin: 20px auto;">
+                    <li>🎨 Custom Icons</li>
+                    <li>🖌️ Design templates</li>
+                    <li>📱 Simple UI</li>
+                    <li>☎️ Wide range of Support</li>
+                </ul>
+                <a href="#" class="cta-button" onclick="alert('Download started! Thank you for choosing LuminateOS.')">Download Now</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add active state to navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = '';
+                link.style.color = '#C635FF';
+                if (link.getAttribute('href') === `#${current}` && !link.classList.contains('download-btn')) {
+                    link.style.background = '#C635FF';
+                    link.style.color = 'white';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
