@@ -3,719 +3,387 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YourStudio | baconboy27</title>
+  <title>YourStudio |  Baconboy27</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <style>
-    :root {
-      --bg-color: #121212;
-      --card-bg: #1e1e2f;
-      --hover-card: #292943;
-      --text-color: #e0e0e0;
-      --subtext-color: #a0a0a0;
-      --accent: #4f8cff;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.6;
+      font-family: 'Figtree', sans-serif;
+      background-color: #0d0d0d;
+      color: #fff;
+      scroll-behavior: smooth;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
+    a { color: #93c5fd; text-decoration: none; }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: #111;
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-weight: 500; }
 
-    .profile {
+    .hero {
+      height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
+      text-align: center;
+      position: relative;
+      padding: 2rem;
       overflow: hidden;
-      margin-bottom: 1.5rem;
-      border: 3px solid var(--accent);
     }
 
-    .avatar img {
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      z-index: 1;
+    }
+
+    .highlight { color: #93c5fd; }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      z-index: 1;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      background: #93c5fd;
+      color: #000;
+      font-weight: bold;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .shapes-bg {
+      position: absolute;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      top: 0; left: 0;
+      z-index: 0;
+      pointer-events: none;
     }
 
-    .name {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    .circle {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #60a5fa22;
+      filter: blur(50px);
     }
 
-    .title {
-      font-size: 1.2rem;
-      color: var(--subtext-color);
-      margin-bottom: 1rem;
-    }
+    .circle1 { top: 10%; left: 15%; }
+    .circle2 { bottom: 20%; right: 20%; }
 
-    .contact-info {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
 
-    .contact-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .contact-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--subtext-color);
-    }
-
-    .contact-value {
-      font-size: 1rem;
-      font-weight: 500;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 3rem;
-    }
-
-    .nav-list {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-      background-color: rgba(31, 31, 46, 0.7);
-      padding: 1rem 2rem;
-      border-radius: 50px;
-    }
-
-    .nav-item {
-      font-size: 1.1rem;
-    }
-
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-color);
-      font-weight: 500;
-      transition: color 0.3s;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-    }
-
-    .nav-link:hover {
-      color: var(--accent);
-    }
-
-    .nav-link.active {
-      color: var(--accent);
-      background-color: rgba(79, 140, 255, 0.1);
-    }
+    .line1 { top: 40%; left: 10%; }
 
     .section {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* About Me */
+    .about-me {
+      text-align: center;
       margin-bottom: 4rem;
     }
 
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
+    .about-me h2 {
+      font-size: 2.5rem;
       margin-bottom: 1.5rem;
-      text-align: center;
-      position: relative;
-      padding-bottom: 0.5rem;
     }
 
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background-color: var(--accent);
-      border-radius: 3px;
-    }
-
-    .section-content {
+    .about-me p {
       max-width: 800px;
-      margin: 0 auto 2rem;
-      text-align: center;
-    }
-
-    .paragraph {
+      margin: 0 auto;
       font-size: 1.1rem;
-      margin-bottom: 1rem;
-      color: var(--subtext-color);
+      line-height: 1.8;
+      color: #cbd5e1;
     }
 
-    .cards-grid {
+    /* Projects */
+    .featured-projects {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s, background-color 0.3s;
-      height: 100%;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      background-color: var(--hover-card);
-    }
-
-    .card-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      height: 100%;
-    }
-
-    .card-icon {
-      margin-bottom: 1.5rem;
-      background-color: rgba(79, 140, 255, 0.1);
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .icon {
-      width: 32px;
-      height: 32px;
-      stroke: var(--accent);
-    }
-
-    .card-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--text-color);
-    }
-
-    .card-description {
-      font-size: 1rem;
-      color: var(--subtext-color);
+      margin-top: 2rem;
     }
 
     .project-card {
       position: relative;
-      overflow: hidden;
+      background-size: cover;
+      background-position: center;
       border-radius: 16px;
-      height: 250px;
+      overflow: hidden;
+      min-height: 220px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
     }
 
-    .project-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s;
-    }
+    .project-card:hover { transform: translateY(-5px); }
 
-    .project-card:hover .project-image {
-      transform: scale(1.05);
-    }
-
-    .project-overlay {
+    .project-card .overlay {
       position: absolute;
       bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(30, 30, 47, 0.95), transparent);
       padding: 1.5rem;
-      transform: translateY(0);
-      transition: transform 0.3s;
+      background: linear-gradient(0deg, rgba(0,0,0,0.7) 60%, transparent);
+      color: white;
     }
 
-    .project-card:hover .project-overlay {
-      transform: translateY(-10px);
-    }
-
-    .project-title {
-      font-size: 1.3rem;
-      font-weight: 600;
+    .project-card h3 {
+      font-size: 1.25rem;
       margin-bottom: 0.5rem;
-      color: var(--text-color);
     }
 
-    .project-description {
-      font-size: 0.9rem;
-      color: var(--subtext-color);
-      margin-bottom: 1rem;
+    .project-card p {
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.9;
     }
 
-    .project-link {
-      display: inline-block;
-      color: var(--accent);
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: opacity 0.3s;
-    }
-
-    .project-link:hover {
-      opacity: 0.8;
-    }
-
-    .skills-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      max-width: 800px;
-      margin: 0 auto 2rem;
-    }
-
-    .skill-tag {
-      background-color: rgba(79, 140, 255, 0.1);
-      color: var(--accent);
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
+    .project-card a {
+      color: #93c5fd;
       font-weight: 500;
     }
 
-    .timeline {
-      max-width: 800px;
-      margin: 0 auto;
+    /* Timeline */
+    .timeline-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-container {
       position: relative;
+      max-width: 1000px;
+      margin: auto;
+      padding: 0 2rem;
     }
 
-    .timeline::before {
+    .timeline-container::after {
       content: '';
       position: absolute;
+      width: 4px;
+      background-color: #2c2c2e;
       top: 0;
       bottom: 0;
       left: 50%;
-      width: 2px;
-      background-color: var(--card-bg);
-      transform: translateX(-50%);
+      margin-left: -2px;
     }
 
     .timeline-item {
-      margin-bottom: 2rem;
+      padding: 1rem 2rem;
       position: relative;
-      width: 100%;
-      display: flex;
+      width: 50%;
     }
 
-    .timeline-item:nth-child(odd) {
-      justify-content: flex-start;
-    }
-
-    .timeline-item:nth-child(even) {
-      justify-content: flex-end;
-    }
-
-    .timeline-content {
-      width: calc(50% - 30px);
-      background-color: var(--card-bg);
-      padding: 1.5rem;
-      border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-      position: relative;
-    }
-
-    .timeline-content::after {
+    .timeline-item::before {
       content: '';
       position: absolute;
       top: 20px;
       width: 20px;
       height: 20px;
-      background-color: var(--accent);
+      background-color: #3b82f6;
       border-radius: 50%;
+      z-index: 1;
     }
 
-    .timeline-item:nth-child(odd) .timeline-content::after {
-      right: -40px;
+    .timeline-item.left { left: 0; }
+    .timeline-item.left::before { left: -10px; }
+    .timeline-item.right { left: 50%; }
+    .timeline-item.right::before { right: -10px; }
+
+    .timeline-item .content {
+      background: #16161a;
+      padding: 1.2rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
     }
 
-    .timeline-item:nth-child(even) .timeline-content::after {
-      left: -40px;
+    .timeline-item h3 { color: #3b82f6; margin-bottom: 0.3rem; }
+    .timeline-item h4 { font-weight: 600; margin-bottom: 0.5rem; }
+    .timeline-item p { font-size: 0.95rem; color: #d1d5db; }
+
+    /* Contact */
+    .contact {
+      text-align: center;
     }
 
-    .timeline-year {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
+    .contact h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
     }
 
-    .timeline-title {
-      font-size: 1.2rem;
+    .contact p {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      margin-bottom: 2rem;
+    }
+
+    .contact a {
+      background: #93c5fd;
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      display: inline-block;
     }
 
-    .timeline-description {
-      font-size: 0.95rem;
-      color: var(--subtext-color);
+    /* Responsive */
+    @media (max-width: 768px) {
+      .timeline-item {
+        width: 100%;
+        padding-left: 4rem;
+      }
+
+      .timeline-container::after { left: 30px; }
+      .timeline-item::before, .timeline-item.left::before { left: 20px; }
+      .timeline-item.right { left: 0; }
     }
 
     footer {
       text-align: center;
-      padding: 2rem 0;
-      color: var(--subtext-color);
+      padding: 2rem;
+      background: #121212;
       font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      .contact-info {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      .nav-list {
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-      }
-      
-      .cards-grid,
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .timeline::before {
-        left: 20px;
-      }
-
-      .timeline-item {
-        justify-content: flex-start;
-      }
-
-      .timeline-content {
-        width: calc(100% - 50px);
-        margin-left: 50px;
-      }
-
-      .timeline-item:nth-child(odd) .timeline-content::after,
-      .timeline-item:nth-child(even) .timeline-content::after {
-        left: -40px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header with Profile -->
-    <header>
-      <div class="profile">
-        <div class="avatar">
-          <img src="avatar.png" alt="Baconboy27 Avatar" />
+  <nav class="navbar">
+    <div class="logo">Baconboy27</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="shapes-bg">
+      <div class="circle circle1"></div>
+      <div class="circle circle2"></div>
+      <div class="line line1"></div>
+    </div>
+    <h1>Hello, I'm <span class="highlight">Bacon</span></h1>
+    <p>A Passionate Developer & Designer</p>
+    <a href="#projects" class="btn">See My Work</a>
+  </header>
+
+  <main>
+    <section id="about" class="section about-me">
+      <h2>About Me</h2>
+      <p>
+        I'm a self-taught developer and digital creator who loves to build meaningful and fun web experiences. Whether it's coding useful Chrome extensions or building Minecraft communities, I enjoy turning ideas into real, functional projects. My focus is on simplicity, interactivity, and impactful design.
+      </p>
+    </section>
+
+    <section id="projects" class="section">
+      <h2>Featured Projects</h2>
+      <div class="featured-projects">
+        <div class="project-card" style="background-image: url('ynotetaking.png');">
+          <div class="overlay">
+            <h3>Your Note Taking</h3>
+            <p>A quick, easy way to capture and organize notes while browsing.</p>
+            <a href="https://chromewebstore.google.com/detail/hmfipnlgifajcolibanjejdlfebmenio?utm_source=item-share-cb">View Project →</a>
+          </div>
         </div>
-        <h1 class="name">Baconboy27</h1>
-        <p class="title">Developer & Minecrafter</p>
+        <div class="project-card" style="background-image: url('evencitycolleseum.png');">
+          <div class="overlay">
+            <h3>Evencity Colleseum</h3>
+            <p>A PvE battle arena intricately designed primarily using World Edit, featuring dynamic terrain, strategic layouts, and immersive combat zones.</p>
+            <a href="https://discord.com/invite/2Zepey6K8K">View Project →</a>
+          </div>
+        </div>
+        <div class="project-card" style="background-image: url('minestudio.png');">
+          <div class="overlay">
+            <h3>MineStudio</h3>
+            <p>Support agent for users, assisting with troubleshooting, answering queries, and ensuring a smooth and satisfactory user experience.</p>
+            <a href="https://minestudio.host">View Project →</a>
+          </div>
+        </div>
+        <div class="project-card" style="background-image: url('photoediting.png');">
+          <div class="overlay">
+            <h3>Photo and Video Editing</h3>
+            <p>Experienced in editing both photos and videos, utilizing various tools and software to enhance visual quality, apply creative effects, and produce polished outcomes.</p>
+            <a href="https://yourstudio.dev/404">View Project →</a>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="contact-info">
-        <div class="contact-item">
+    <section id="timeline" class="section">
+      <h2 class="timeline-title">My Journey</h2>
+      <div class="timeline-container">
+        <div class="timeline-item left">
+          <div class="content">
+            <h3>2021</h3>
+            <h4>First Minecraft Server</h4>
+            <p>Started my first server on Minehut and tinkered with plugins.</p>
+          </div>
         </div>
-
-        <div class="contact-item">
-          <p class="contact-label">Discord</p>
-          <p class="contact-value">baconboy27</p>
+        <div class="timeline-item right">
+          <div class="content">
+            <h3>2022</h3>
+            <h4>Ranked up in Bedwars</h4>
+            <p>Mastered PVP and base building in Hypixel.</p>
+          </div>
         </div>
-        
-        <div class="contact-item">
-          <p class="contact-label">Email</p>
-          <p class="contact-value">baconboy27@yourstudio.dev</p>
+        <div class="timeline-item left">
+          <div class="content">
+            <h3>2023</h3>
+            <h4>YourNoteTaking</h4>
+            <p>Created a Chrome extension for taking notes easily.</p>
+          </div>
+        </div>
+        <div class="timeline-item right">
+          <div class="content">
+            <h3>2025</h3>
+            <h4>Evencity</h4>
+            <p>Became builder and then marketing manager at Evencity.</p>
+          </div>
         </div>
       </div>
-    </header>
+    </section>
 
-    <!-- Navigation -->
-    <nav>
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a href="https://yourstudio.dev" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="index.html" class="nav-link active">About Me</a>
-        </li>
-       
-        </li>
-      </ul>
-    </nav>
+    <section id="contact" class="section contact">
+      <h2>Contact Me</h2>
+      <p>If you’d like to collaborate or have any questions, feel free to reach out!</p>
+      <a href="mailto:baconboy27@yourstudio.dev">Email</a>
+      <a href="https://discord.gg/vcK2esQQse">Discord</a>
+    </section>
+  </main>
 
-    <!-- Main Content -->
-    <main>
-      <!-- About Me Section -->
-      <section id="about" class="section">
-        <h2 class="section-title">About Me</h2>
-        <div class="section-content">
-          <p class="paragraph">
-            Hello! I'm a passionate developer and Minecraft enthusiast with a love for creating immersive digital experiences. 
-            I specialize in building custom Minecraft environments and managing community-driven projects.
-          </p>
-          <p class="paragraph">
-            My journey began with a simple love for gaming, which evolved into a passion for development and design. 
-            Today, I combine these skills to create engaging experiences for players and communities.
-          </p>
-        </div>
-      </section>
+  <footer>
+    <p>© 2025 YourStudio & baconboy27. All rights reserved.</p>
+  </footer>
 
-      <!-- Skills Section -->
-      <section id="skills" class="section">
-        <h2 class="section-title">My Skills</h2>
-        <div class="skills-container">
-          <span class="skill-tag">Minecraft Building</span>
-          <span class="skill-tag">Server Management</span>
-          <span class="skill-tag">Community Building</span>
-          <span class="skill-tag">Marketing</span>
-          <span class="skill-tag">Web Development</span>
-          <span class="skill-tag">Mini-Game Design</span>
-          <span class="skill-tag">Content Creation</span>
-          <span class="skill-tag">Project Management</span>
-        </div>
-      </section>
+  <script>
+    gsap.from(".hero h1", {opacity: 0, y: 50, duration: 1});
+    gsap.from(".hero p", {opacity: 0, y: 30, delay: 0.3});
+    gsap.from(".btn", {opacity: 0, y: 20, delay: 0.6});
 
-      <!-- Projects Section (NEW) -->
-      <section id="projects" class="section">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-grid">
-          <!-- Project Card 1 -->
-          <div class="project-card">
-            <img src="ynotetaking.png?height=250&width=500" alt="YourNoteTaking" class="project-image">
-            <div class="project-overlay">
-              <h3 class="project-title">Your Note Taking</h3>
-              <p class="project-description">Your Note Taking is a quick, easy way to capture and organize notes while browsing.</p>
-              <a href="https://chromewebstore.google.com/detail/hmfipnlgifajcolibanjejdlfebmenio?utm_source=item-share-cb" class="project-link">View Project →</a>
-            </div>
-          </div>
-
-          <!-- Project Card 2 -->
-          <div class="project-card">
-            <img src="evencitycolleseum.png" alt="Colleseum" class="project-image">
-            <div class="project-overlay">
-              <h3 class="project-title">Evencity Colleseum</h3>
-              <p class="project-description">A pve battle arena made mainly from world edit.</p>
-              <a href="https://discord.com/invite/2Zepey6K8K" class="project-link">View Project →</a>
-            </div>
-          </div>
-
-          <!-- Project Card 3 -->
-          <div class="project-card">
-            <img src="firepickless.png" alt="firepickless" class="project-image">
-            <div class="project-overlay">
-              <h3 class="project-title">FirePickles</h3>
-              <p class="project-description">I was an Admin / Devleloper who made the Discord and Rank System.</p>
-              <a href="https://discord.com/channels/1288029719954067468/1288031026928685076" class="project-link">View Project →</a>
-            </div>
-          </div>
-
-          <!-- Project Card 4 -->
-          <div class="project-card">
-            <img src="photoediting.png" alt="Server Hub Project" class="project-image">
-            <div class="project-overlay">
-              <h3 class="project-title">Photo Editing</h3>
-              <p class="project-description">Can edit photos and make Thumbnails.</p>
-              <a href="https://media.discordapp.net/attachments/1362610008470196324/1362617332350058667/Evencity_Promo3_FINAL.png?ex=68045d48&is=68030bc8&hm=47708aec5ec68824124cbf3125fb411673411954e649386444428fb437539089&=&format=webp&quality=lossless&width=1628&height=856" class="project-link">View Project →</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Experience Section -->
-      <section id="experience" class="section">
-        <h2 class="section-title">Experience</h2>
-        <div class="cards-grid">
-          <!-- Card 1 -->
-          <div class="card">
-            <div class="card-content">
-              <div class="card-icon">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                </svg>
-              </div>
-              <h3 class="card-title">Minecraft Builder</h3>
-              <p class="card-description">Designed and constructed custom environments, structures, and landscapes for various Minecraft servers.</p>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="card">
-            <div class="card-content">
-              <div class="card-icon">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-              </div>
-              <h3 class="card-title">Community Manager</h3>
-              <p class="card-description">Managed online communities, organized events, and helped create positive player interactions.</p>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="card">
-            <div class="card-content">
-              <div class="card-icon">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                  <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                  <path d="M2 2l7.586 7.586"></path>
-                  <circle cx="11" cy="11" r="2"></circle>
-                </svg>
-              </div>
-              <h3 class="card-title">Marketing Personal</h3>
-              <p class="card-description">Developed and implemented marketing promotions to grow player bases.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Journey Section -->
-      <section id="journey" class="section">
-        <h2 class="section-title">My Journey</h2>
-        <div class="timeline">
-          <!-- Timeline Item 1 -->
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <div class="timeline-year">2021</div>
-              <h3 class="timeline-title">First Minecraft Server</h3>
-              <p class="timeline-description">Started my first Minecraft server on Minehut and began tinkering with plugins.</p>
-            </div>
-          </div>
-
-          <!-- Timeline Item 2 -->
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <div class="timeline-year">2022</div>
-              <h3 class="timeline-title">Ranked up in Bedwars</h3>
-              <p class="timeline-description">Mastered pvp and building defences in Hypixel.</p>
-            </div>
-          </div>
-
-          <!-- Timeline Item 3 -->
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <div class="timeline-year">2023</div>
-              <h3 class="timeline-title">YourNoteTaking</h3>
-              <p class="timeline-description">Took on the challenge of making a Note Taking chrome Extension</p>
-            </div>
-          </div>
-
-          <!-- Timeline Item 4 -->
-          <div class="timeline-item">
-            <div class="timeline-content">
-              <div class="timeline-year">2025</div>
-              <h3 class="timeline-title">Evencity</h3>
-              <p class="timeline-description">First became a builder for evencity then also took on the role of Manager of Marketing</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Interests Section -->
-      <section id="interests" class="section">
-        <h2 class="section-title">Interests & Hobbies</h2>
-        <div class="cards-grid">
-          <!-- Card 1 -->
-          <div class="card">
-            <div class="card-content">
-              <div class="card-icon">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                  <line x1="6" y1="1" x2="6" y2="4"></line>
-                  <line x1="10" y1="1" x2="10" y2="4"></line>
-                  <line x1="14" y1="1" x2="14" y2="4"></line>
-                </svg>
-              </div>
-              <h3 class="card-title">Gaming</h3>
-              <p class="card-description">Beyond Minecraft, I enjoy exploring various game genres and understanding different game design principles.</p>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="card">
-            <div class="card-content">
-              <div class="card-icon">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                </svg>
-              </div>
-              <h3 class="card-title">Researching</h3>
-              <p class="card-description">I love reading tech articles and researching the products afterwards..</p>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="card">
-            <div class="card-content">
-              <div class="card-icon">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                </svg>
-              </div>
-              <h3 class="card-title">Exploring</h3>
-              <p class="card-description">I enjoy exploring new technologies, design trends, and creative approaches to digital experiences.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-      <p>&copy; 2025 Baconboy27. All rights reserved.</p>
-    </footer>
-  </div>
+    gsap.to(".circle1", {y: 30, x: -30, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut"});
+    gsap.to(".circle2", {y: -20, x: 20, duration: 6, repeat: -1, yoyo: true, ease: "sine.inOut"});
+    gsap.to(".line1", {x: 20, duration: 5, repeat: -1, yoyo: true, ease: "sine.inOut"});
+  </script>
 </body>
 </html>
